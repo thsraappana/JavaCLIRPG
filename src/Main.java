@@ -1,17 +1,17 @@
+import java.util.Scanner;
+
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
+    public static void greetPlayer() {
+        System.out.println("Welcome to the Java CLI RPG");
+        System.out.println("In this game you will fight monsters, gain experience and loot items.");
+        System.out.println("You will win the game by reaching level 5. But beware, there are many monsters to face, and dying means losing the game!");
+        System.out.println("Lets start by creating a character!");
+    }
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
-
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
-
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
-        }
+        greetPlayer();
+        PlayerCharacter mainCharacter = CharacterCreation.characterCreation();
+        System.out.println(mainCharacter);
     }
 }
