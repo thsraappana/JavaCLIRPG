@@ -1,19 +1,35 @@
+package gameFLow;
+
 import items.*;
+import player.PlayerCharacter;
+import player.classes.Mage;
+import player.classes.Rogue;
+import player.classes.Warrior;
 
 import java.util.Scanner;
 
 public class CharacterCreation {
-    static String[] playerClasses = {"Warrior", "Rogue", "Mage"};
+    static String[] playerJobs = {"Warrior", "Rogue", "Mage"};
 
     public static PlayerCharacter characterCreation() {
         Scanner scanner = new Scanner(System.in);
+        PlayerCharacter playerCharacter = null;
 
         System.out.print("Please enter your characters name: ");
         String charName = scanner.nextLine();
 
-        String cClass = classSelection(scanner);
-
-        PlayerCharacter playerCharacter = new PlayerCharacter(charName, cClass);
+        String job = jobSelection(scanner);
+        switch(job) {
+            case "Warrior":
+                playerCharacter = new Warrior(charName, job);
+                break;
+            case "Rogue":
+                playerCharacter = new Rogue(charName, job);
+                break;
+            case "Mage":
+                playerCharacter = new Mage(charName, job);
+            break;
+        }
 
         equipStartingItem(playerCharacter);
 
@@ -36,7 +52,7 @@ public class CharacterCreation {
     }
 
     public static void equipStartingItem(PlayerCharacter playerCharacter) {
-        switch(playerCharacter.charClass) {
+        switch(playerCharacter.charJob) {
             case "Warrior":
                 Armor warriorArmor = new WornArmor();
                 playerCharacter.equipArmor(warriorArmor);
@@ -51,26 +67,26 @@ public class CharacterCreation {
         }
     }
 
-    public static String classSelection(Scanner scanner) {
-        System.out.println("Choose a class for your character; Warrior, Rogue or Mage (if you want more information about the classes, type help instead)");
+    public static String jobSelection(Scanner scanner) {
+        System.out.println("Choose a job for your character; Warrior, Rogue or Mage (if you want more information about jobs, type help instead)");
 
-        String charClass = scanner.nextLine();
-        if (charClass.equals("help")) {
+        String charJob = scanner.nextLine();
+        if (charJob.equals("help")) {
             classInfo();
-            charClass = classSelection(scanner);
+            charJob = jobSelection(scanner);
         } else {
-            boolean classIsValid = false;
-            for (String pClass : playerClasses) {
-                if (pClass.equals(charClass)) {
-                    classIsValid = true;
+            boolean jobIsValid = false;
+            for (String pClass : playerJobs) {
+                if (pClass.equals(charJob)) {
+                    jobIsValid = true;
                     break;
                 }
             }
-            if (!classIsValid) {
-                System.out.println("Invalid class name. Choose either Warrior, Rogue or Mage");
-                charClass = classSelection(scanner);
+            if (!jobIsValid) {
+                System.out.println("Invalid job. Choose either Warrior, Rogue or Mage");
+                charJob = jobSelection(scanner);
             }
         }
-        return charClass;
+        return charJob;
     }
 }

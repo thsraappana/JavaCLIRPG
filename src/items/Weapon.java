@@ -10,12 +10,12 @@ public class Weapon {
         EVASION,
         STUN_CHANCE,
     }
-    String name;
-    int maxAttackBonus;
-    int minAttackBonus;
-    int crtChanceBonus;
-    int healthModifier;
-    SpecialAbilities specialAbility;
+    public String name;
+    public int maxAttackBonus;
+    public int minAttackBonus;
+    public int crtChanceBonus;
+    public int healthModifier;
+    public SpecialAbilities specialAbility;
 
     public Weapon(String name, int maxAttackBonus, int minAttackBonus, int crtChanceBonus, int healthModifier, SpecialAbilities specialAbility) {
         this.maxAttackBonus = maxAttackBonus;
@@ -24,18 +24,6 @@ public class Weapon {
         this.healthModifier = healthModifier;
         this.specialAbility = specialAbility;
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getMinAttackBonus() {
-        return minAttackBonus;
-    }
-
-    public int getMaxAttackBonus() {
-        return maxAttackBonus;
     }
 
     public String toString() {
