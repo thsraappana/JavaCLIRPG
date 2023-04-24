@@ -25,7 +25,6 @@ public class Weapon {
         this.specialAbility = specialAbility;
         this.name = name;
     }
-
     public String toString() {
         return "No weapon equipped";
     }

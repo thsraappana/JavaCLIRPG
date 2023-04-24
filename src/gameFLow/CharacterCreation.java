@@ -19,14 +19,14 @@ public class CharacterCreation {
         String charName = scanner.nextLine();
 
         String job = jobSelection(scanner);
-        switch(job) {
-            case "Warrior":
+        switch(job.toLowerCase()) {
+            case "warrior":
                 playerCharacter = new Warrior(charName, job);
                 break;
-            case "Rogue":
+            case "rogue":
                 playerCharacter = new Rogue(charName, job);
                 break;
-            case "Mage":
+            case "mage":
                 playerCharacter = new Mage(charName, job);
             break;
         }
@@ -42,7 +42,7 @@ public class CharacterCreation {
         System.out.println("    Passive ability: Warriors Will. If dealt lethal damage, has a chance to stay at 1 health instead of dying.");
         System.out.println("    Starting item: Worn Armor. Adds 1 shield value. Shield value reduced the damage enemies deal.");
         System.out.println("Rogue:");
-        System.out.println("    Active ability: Evasive Maneuvers. Deal 1.25x damage and enemy next 2 attacks have a 50% chance to miss.");
+        System.out.println("    Active ability: Evasive Maneuvers. Deals extra damage equal to half of base damage and gives 50% evasion for 2 rounds.");
         System.out.println("    Passive ability: Back stab. First attack of each encounter deals 1.25x damage.");
         System.out.println("    Starting Item. Dull daggers. Adds 10% critical strike chance and 1 to min damage.");
         System.out.println("Mage:");

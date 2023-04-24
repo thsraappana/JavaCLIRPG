@@ -4,6 +4,7 @@ import monsters.Bandit;
 import monsters.Brute;
 import monsters.Monster;
 import monsters.Skeleton;
+import player.PassiveEffect;
 import player.PlayerCharacter;
 
 import java.util.Random;
@@ -44,12 +45,10 @@ public class Encounter {
     }
 
     public void encounterEnd(Scanner scanner) {
-        if (playerCharacter.health <= 0) {
-            System.out.println("You died.");
-        } else {
-            playerCharacter.gainExp(encounterMonster.expYielded);
-            restOrContinue(scanner);
-        }
+        playerCharacter.gainExp(encounterMonster.expYielded);
+        encounterMonster.dropLoot(playerCharacter, scanner);
+        restOrContinue(scanner);
+        cleanup();
     }
 
     public void restOrContinue(Scanner scanner) {
@@ -76,7 +75,7 @@ public class Encounter {
 
         Monster[] level0MonsterTable = {skeleton, bandit};
         Monster[] level1MonsterTable = {skeleton, bandit, brute};
-        Monster[] level2MonsterTable = {skeleton, bandit};
+        Monster[] level2MonsterTable = {brute};
         Monster[] level3MonsterTable = {brute};
         Monster[] level4MonsterTable = {brute};
 
@@ -105,6 +104,17 @@ public class Encounter {
     }
 
     public void encounterBattle(Scanner scanner) {
+        if (playerCharacter.passiveEffects.length > 0) {
+            for (PassiveEffect effect : playerCharacter.passiveEffects) {
+                if (effect.effectDuration > 0) {
+                    effect.doPassiveEffect();
+                    effect.decrementDuration();
+                }
+                // TODO: cleanup passives with no duration
+
+            }
+        }
+
         playerAttack(scanner);
         if (encounterMonster.health > 0) {
             monsterAttack();
@@ -148,6 +158,10 @@ public class Encounter {
         }
     }
 
+    public void cleanup() {
+        playerCharacter.passiveEffects = new PassiveEffect[]{};
+    }
+
     public void characterInfo() {
         System.out.println("---------------");
         System.out.println("Character info:");
@@ -155,7 +169,7 @@ public class Encounter {
         System.out.println("Health: " + playerCharacter.health + "/" + playerCharacter.maxHealth);
         System.out.println("Equipped weapon: " + playerCharacter.getEquippedWeapon());
         System.out.println("Equipped armor: " + playerCharacter.getEquippedArmor());
-        System.out.println("Attack damage: " + playerCharacter.minAttackVal + "-" + playerCharacter.maxAttackVal);
+        System.out.println("Attack damage: " + (playerCharacter.minAttackVal + playerCharacter.equippedWeapon.minAttackBonus) + "-" + (playerCharacter.maxAttackVal + playerCharacter.equippedWeapon.maxAttackBonus));
         System.out.println(playerCharacter.getExp());
         System.out.println("---------------");
     }

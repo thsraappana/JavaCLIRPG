@@ -1,8 +1,11 @@
 package monsters;
 
+import items.Armor;
+import items.Weapon;
 import player.PlayerCharacter;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Monster {
     public String name;
@@ -12,6 +15,7 @@ public class Monster {
     public int minPlayerLevel;
     public int expYielded;
     public boolean stunned = false;
+    public LootTable lootTable;
 
     public Monster(String name, int health, int minDamageVal, int maxDamageVal, int minPlayerLevel, int expYielded) {
         this.name = name;
@@ -27,7 +31,7 @@ public class Monster {
     }
 
     public void takeDamage(int damage) {
-        this.health -= damage;
+        health -= damage;
     }
 
     public String toString() {
@@ -39,5 +43,16 @@ public class Monster {
         int attackDamage = random.nextInt(this.maxDamageVal - this.minDamageVal + 1) + this.minDamageVal;
         return attackDamage;
     }
-    public void attack(PlayerCharacter playerCharacter) {}
+    public void attack(PlayerCharacter playerCharacter) {
+        System.out.println("\n!!! " + name + " attacks !!!\n");
+        int basicAttackDamage = basicAttack();
+        System.out.println(name + " attacks you for " + basicAttackDamage + " damage!\n");
+        playerCharacter.takeDamage(basicAttackDamage);
+    }
+
+    public void dropLoot(PlayerCharacter playerCharacter, Scanner scanner) {
+        Object randomItem = lootTable.randomLoot();
+        System.out.println("\n" + name + " dropped " + randomItem);
+        playerCharacter.equipChoice(randomItem, scanner);
+    }
 }

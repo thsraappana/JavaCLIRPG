@@ -15,16 +15,26 @@ public class Warrior extends PlayerCharacter {
         int rollResult = RollUtils.RollChance();
         int stunChance = playerLevel * 25;
         int baseDamage = getBaseDmg();
-        int trueDmg = baseDamage + (playerLevel + 1);
+        int modifiedDamage = baseDamage + (playerLevel + 1);
 
         boolean stunSuccess = stunChance >= rollResult;
-        System.out.println("Dealt " + trueDmg + " damage! ");
+        System.out.println("Dealt " + modifiedDamage + " damage! ");
         if (stunSuccess) {
             System.out.println("### " + encounterMonster.name.toUpperCase() + " IS STUNNED ###");
             encounterMonster.stunned = true;
         }
-        encounterMonster.takeDamage(trueDmg);
+        encounterMonster.takeDamage(modifiedDamage);
         isClassAbilityUsed = true;
     }
 
+    public void playerDeath() {
+        int rollResult = RollUtils.RollChance();
+        if (rollResult >= 80) {
+            System.out.println("Your Warriors Will keeps you at 1 health instead of dying!");
+            health = 1;
+        } else {
+            System.out.println("You have died!");
+            System.exit(0);
+        }
+    }
 }
