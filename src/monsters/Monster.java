@@ -46,7 +46,7 @@ public class Monster {
     public void attack(PlayerCharacter playerCharacter) {
         System.out.println("\n!!! " + name + " attacks !!!\n");
         int basicAttackDamage = basicAttack();
-        System.out.println(name + " attacks you for " + basicAttackDamage + " damage!\n");
+        System.out.println(name + " attacks you for " + basicAttackDamage + " damage!");
         playerCharacter.takeDamage(basicAttackDamage);
     }
 

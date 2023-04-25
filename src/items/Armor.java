@@ -12,6 +12,6 @@ public class Armor {
     }
 
     public String toString() {
-        return "No armor equipped";
+        return "No armor equipped. Provides no bonuses.";
     }
 }

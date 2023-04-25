@@ -11,7 +11,7 @@ public class Skeleton extends Monster {
     private Object[] rareLoot = {WoodenStaff};
 
     public Skeleton() {
-        super("Skeleton",5, 1, 3, 0, 1);
+        super("Skeleton",12, 1, 4, 0, 1);
 
         lootTable = new LootTable(commonLoot, uncommonLoot, rareLoot);
     }

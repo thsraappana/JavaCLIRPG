@@ -26,6 +26,6 @@ public class Weapon {
         this.name = name;
     }
     public String toString() {
-        return "No weapon equipped";
+        return "No weapon equipped. Provides no bonuses.";
     }
 }

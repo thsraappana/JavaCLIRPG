@@ -4,6 +4,6 @@ import player.PlayerCharacter;
 
 public class Brute extends Monster {
     public Brute() {
-        super("Brute", 10, 3, 6, 1, 2);
+        super("Brute", 20, 3, 7, 1, 2);
     }
 }

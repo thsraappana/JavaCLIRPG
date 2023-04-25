@@ -11,7 +11,7 @@ public class Bandit extends Monster{
     private Object[] uncommonLoot = {WoodenStaff};
     private Object[] rareLoot = {WoodenStaff};
     public Bandit() {
-        super("Bandit",6, 2, 2, 0, 1);
+        super("Bandit",10, 2, 4, 0, 1);
         lootTable = new LootTable(commonLoot, uncommonLoot, rareLoot);
     }
 }

@@ -3,6 +3,7 @@ package player;
 import items.Armor;
 import items.Weapon;
 import monsters.Monster;
+import utils.RollUtils;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -17,7 +18,6 @@ public class PlayerCharacter {
     public int maxHealth = 10;
     public int minAttackVal = 1;
     public int maxAttackVal = 3;
-    public int critChance = 0;
     public int playerLevel = 0;
     public int playerExp = 0;
     public boolean isClassAbilityUsed = false;
@@ -39,13 +39,6 @@ public class PlayerCharacter {
         equippedArmor = armor;
     }
 
-    public String getEquippedArmor() {
-        return equippedArmor.name;
-    }
-
-    public String getEquippedWeapon() {
-        return equippedWeapon.name;
-    }
 
     public String getExp() {
         int nextLevel = expTable[playerLevel + 1];
@@ -60,10 +53,25 @@ public class PlayerCharacter {
         return attackDamage;
     }
 
-    public void basicAttack(Monster encounterMonster) {
+    public int crtDamage(int baseDamage) {
+        int crtChance = equippedWeapon.crtChanceBonus;
+        int crtRoll = RollUtils.RollChance();
+        if (crtChance > crtRoll) {
+            baseDamage *= 2;
+            System.out.println("!!! CRITICAL STRIKE !!!");
+        }
+        return baseDamage;
+    }
+
+    public void basicAttack(Monster encounterMonster, boolean isFirstTurn) {
         int attackDamage = getBaseDmg();
-        System.out.println("You swing at the " + encounterMonster.name + " with your " + this.getEquippedWeapon() + " dealing " + attackDamage + " damage!");
-        encounterMonster.takeDamage(attackDamage);
+        if (charJob.equals("rogue") && isFirstTurn) {
+            attackDamage = attackDamage + (playerLevel + 1);
+            System.out.println("You ambush the " + encounterMonster.name + "!");
+        }
+        int finalDamage = crtDamage(attackDamage);
+        System.out.println("You swing at the " + encounterMonster.name + " with your " + this.equippedWeapon.name + " dealing " + finalDamage + " damage!");
+        encounterMonster.takeDamage(finalDamage);
     }
 
     public void specialAbility(Monster encounterMonster) {}
@@ -94,14 +102,19 @@ public class PlayerCharacter {
     }
 
     public void takeDamage(int damage) {
-        int shieldVal = equippedArmor.shieldVal;
-        int damageTaken = damage - shieldVal;
-        if (shieldVal > 0) {
-            System.out.println("Your armor protected you for " + shieldVal + " damage, " + "You took " + damageTaken + " damage!");
-        }
-        health -= damageTaken;
-        if (health < 1) {
-            playerDeath();
+        int evasionRoll = RollUtils.RollChance();
+        if (evasion > evasionRoll) {
+            System.out.print("You dodged the attack and took 0 damage!\n");
+        } else {
+            int shieldVal = equippedArmor.shieldVal;
+            int damageTaken = damage - shieldVal;
+            if (shieldVal > 0) {
+                System.out.println("Your armor protected you for " + shieldVal + " damage, " + "You took " + damageTaken + " damage!");
+            }
+            health -= damageTaken;
+            if (health < 1) {
+                playerDeath();
+            }
         }
     }
 

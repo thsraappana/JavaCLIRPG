@@ -6,6 +6,8 @@ import monsters.Monster;
 import monsters.Skeleton;
 import player.PassiveEffect;
 import player.PlayerCharacter;
+import player.classes.Mage;
+import utils.RollUtils;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -13,7 +15,7 @@ import java.util.Scanner;
 public class Encounter {
     PlayerCharacter playerCharacter;
     Monster encounterMonster;
-
+    boolean isFirstTurn = true;
     public Encounter(PlayerCharacter character) {
         playerCharacter = character;
     }
@@ -104,21 +106,26 @@ public class Encounter {
     }
 
     public void encounterBattle(Scanner scanner) {
+        if (playerCharacter.charJob.equals("mage")) {
+            Mage playerMage = (Mage) playerCharacter;
+            playerMage.HigherMind(isFirstTurn);
+        }
         if (playerCharacter.passiveEffects.length > 0) {
             for (PassiveEffect effect : playerCharacter.passiveEffects) {
                 if (effect.effectDuration > 0) {
                     effect.doPassiveEffect();
                     effect.decrementDuration();
+                } else if (effect.effectDuration == 0) {
+                    effect.passiveCleanUp();
+                    // TODO: cleanup passives with no duration
                 }
-                // TODO: cleanup passives with no duration
-
             }
         }
-
         playerAttack(scanner);
         if (encounterMonster.health > 0) {
             monsterAttack();
         }
+        if (isFirstTurn) isFirstTurn = false;
     }
 
     public void monsterAttack() {
@@ -145,7 +152,7 @@ public class Encounter {
             characterInfo();
             playerAttack(scanner);
         } else if(attackType.equals("attack")) {
-            playerCharacter.basicAttack(encounterMonster);
+            playerCharacter.basicAttack(encounterMonster, isFirstTurn);
         } else if(attackType.equals("special")) {
             playerCharacter.specialAbility(encounterMonster);
         }
@@ -165,11 +172,13 @@ public class Encounter {
     public void characterInfo() {
         System.out.println("---------------");
         System.out.println("Character info:");
+        System.out.println("Character job: " + playerCharacter.charJob);
         System.out.println("Level: " + playerCharacter.playerLevel);
         System.out.println("Health: " + playerCharacter.health + "/" + playerCharacter.maxHealth);
-        System.out.println("Equipped weapon: " + playerCharacter.getEquippedWeapon());
-        System.out.println("Equipped armor: " + playerCharacter.getEquippedArmor());
+        System.out.println("Equipped weapon: " + playerCharacter.equippedWeapon);
+        System.out.println("Equipped armor: " + playerCharacter.equippedArmor);
         System.out.println("Attack damage: " + (playerCharacter.minAttackVal + playerCharacter.equippedWeapon.minAttackBonus) + "-" + (playerCharacter.maxAttackVal + playerCharacter.equippedWeapon.maxAttackBonus));
+        System.out.println("Base evasion: " + playerCharacter.evasion + "%");
         System.out.println(playerCharacter.getExp());
         System.out.println("---------------");
     }

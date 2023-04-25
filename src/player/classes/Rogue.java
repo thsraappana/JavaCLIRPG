@@ -15,11 +15,11 @@ public class Rogue extends PlayerCharacter {
         System.out.println("Using Evasive Maneuvers on " + encounterMonster.name + "! ");
         int baseDamage = getBaseDmg();
         int modifiedDamage = baseDamage + (baseDamage / 2);
+        int finalDamage = crtDamage(modifiedDamage);
+        encounterMonster.takeDamage(finalDamage);
+        System.out.println("Dealt " + finalDamage + " damage! ");
 
-        encounterMonster.takeDamage(modifiedDamage);
-        System.out.println("Dealt " + modifiedDamage + " damage! ");
-
-        PassiveEffect evasiveManeuvers = new PassiveEffect("Evasive Maneuvers", 2);
+        PassiveEffect evasiveManeuvers = new PassiveEffect("Evasive Maneuvers", 2, this);
         PassiveEffect[] newArray = Arrays.copyOf(passiveEffects, passiveEffects.length + 1);
         newArray[newArray.length - 1] = evasiveManeuvers;
         passiveEffects = newArray;

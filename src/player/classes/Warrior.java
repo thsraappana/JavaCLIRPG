@@ -16,14 +16,15 @@ public class Warrior extends PlayerCharacter {
         int stunChance = playerLevel * 25;
         int baseDamage = getBaseDmg();
         int modifiedDamage = baseDamage + (playerLevel + 1);
-
+        int finalDamage = crtDamage(modifiedDamage);
         boolean stunSuccess = stunChance >= rollResult;
-        System.out.println("Dealt " + modifiedDamage + " damage! ");
         if (stunSuccess) {
             System.out.println("### " + encounterMonster.name.toUpperCase() + " IS STUNNED ###");
             encounterMonster.stunned = true;
         }
-        encounterMonster.takeDamage(modifiedDamage);
+        encounterMonster.takeDamage(finalDamage);
+        System.out.println("Dealt " + finalDamage + " damage! ");
+
         isClassAbilityUsed = true;
     }
 

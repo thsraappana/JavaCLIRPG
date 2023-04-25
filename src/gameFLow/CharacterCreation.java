@@ -9,7 +9,7 @@ import player.classes.Warrior;
 import java.util.Scanner;
 
 public class CharacterCreation {
-    static String[] playerJobs = {"Warrior", "Rogue", "Mage"};
+    static String[] playerJobs = {"warrior", "rogue", "mage"};
 
     public static PlayerCharacter characterCreation() {
         Scanner scanner = new Scanner(System.in);
@@ -43,25 +43,25 @@ public class CharacterCreation {
         System.out.println("    Starting item: Worn Armor. Adds 1 shield value. Shield value reduced the damage enemies deal.");
         System.out.println("Rogue:");
         System.out.println("    Active ability: Evasive Maneuvers. Deals extra damage equal to half of base damage and gives 50% evasion for 2 rounds.");
-        System.out.println("    Passive ability: Back stab. First attack of each encounter deals 1.25x damage.");
+        System.out.println("    Passive ability: Back stab. First attack of each encounter Deals extra damage equal to character level if its basic attack.");
         System.out.println("    Starting Item. Dull daggers. Adds 10% critical strike chance and 1 to min damage.");
         System.out.println("Mage:");
-        System.out.println("    Active ability: Magic Missile. Deal 1.5x damage.");
+        System.out.println("    Active ability: Magic Missile. Deal 2x base damage.");
         System.out.println("    Passive ability: Higher Mind. Each turn has a chance to reset the use of Magic Missile.");
         System.out.println("    Starting item. Wooden staff. Adds 3 to max damage.");
     }
 
     public static void equipStartingItem(PlayerCharacter playerCharacter) {
         switch(playerCharacter.charJob) {
-            case "Warrior":
+            case "warrior":
                 Armor warriorArmor = new WornArmor();
                 playerCharacter.equipArmor(warriorArmor);
                 break;
-            case "Rogue":
+            case "rogue":
                 Weapon rogueWeapon = new DullDaggers();
                 playerCharacter.equipWeapon(rogueWeapon);
                 break;
-            case "Mage":
+            case "mage":
                 Weapon mageWeapon = new WoodenStaff();
                 playerCharacter.equipWeapon(mageWeapon);
         }
@@ -77,7 +77,7 @@ public class CharacterCreation {
         } else {
             boolean jobIsValid = false;
             for (String pClass : playerJobs) {
-                if (pClass.equals(charJob)) {
+                if (pClass.equals(charJob.toLowerCase())) {
                     jobIsValid = true;
                     break;
                 }
