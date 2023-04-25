@@ -1,13 +1,14 @@
 package monsters;
 
+import items.DullDaggers;
 import items.WoodenStaff;
 import items.WornArmor;
-import player.PlayerCharacter;
 
 public class Bandit extends Monster{
     private Object WoodenStaff = new WoodenStaff();
     private Object WornArmor = new WornArmor();
-    private Object[] commonLoot = {WoodenStaff, WornArmor};
+    private Object DullDaggers = new DullDaggers();
+    private Object[] commonLoot = {WoodenStaff, WornArmor, DullDaggers};
     private Object[] uncommonLoot = {WoodenStaff};
     private Object[] rareLoot = {WoodenStaff};
     public Bandit() {

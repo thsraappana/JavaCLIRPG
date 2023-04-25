@@ -3,12 +3,12 @@ package items;
 public class Armor {
     public String name;
     public int shieldVal;
-    public int healthModifier;
+    public int evasionBonus;
 
-    public Armor(String name, int shieldVal, int healthModifier) {
+    public Armor(String name, int shieldVal, int evasionBonus) {
         this.shieldVal = shieldVal;
-        this.healthModifier = healthModifier;
         this.name = name;
+        this.evasionBonus = evasionBonus;
     }
 
     public String toString() {

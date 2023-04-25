@@ -23,7 +23,7 @@ public class PlayerCharacter {
     public boolean isClassAbilityUsed = false;
     public int evasion = 0;
     public PassiveEffect[] passiveEffects = {};
-    public Weapon equippedWeapon = new Weapon("Fists", 0, 0, 0, 0, Weapon.SpecialAbilities.NONE);
+    public Weapon equippedWeapon = new Weapon("Fists", 0, 0, 0);
     public Armor equippedArmor = new Armor("Unarmored", 0, 0);
     
     public PlayerCharacter(String name, String job) {
@@ -103,7 +103,7 @@ public class PlayerCharacter {
 
     public void takeDamage(int damage) {
         int evasionRoll = RollUtils.RollChance();
-        if (evasion > evasionRoll) {
+        if ((evasion + equippedArmor.evasionBonus) > evasionRoll) {
             System.out.print("You dodged the attack and took 0 damage!\n");
         } else {
             int shieldVal = equippedArmor.shieldVal;
