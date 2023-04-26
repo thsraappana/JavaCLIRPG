@@ -13,7 +13,7 @@ public class Warrior extends PlayerCharacter {
         System.out.println("Using Mighty Blow on " + encounterMonster.name + "! ");
 
         int rollResult = RollUtils.RollChance();
-        int stunChance = playerLevel * 25;
+        int stunChance = (playerLevel + 1) * 25;
         int baseDamage = getBaseDmg();
         int modifiedDamage = baseDamage + (playerLevel + 1);
         int finalDamage = crtDamage(modifiedDamage);

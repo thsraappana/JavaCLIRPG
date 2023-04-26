@@ -102,18 +102,25 @@ public class PlayerCharacter {
     }
 
     public void takeDamage(int damage) {
-        int evasionRoll = RollUtils.RollChance();
-        if ((evasion + equippedArmor.evasionBonus) > evasionRoll) {
-            System.out.print("You dodged the attack and took 0 damage!\n");
-        } else {
-            int shieldVal = equippedArmor.shieldVal;
-            int damageTaken = damage - shieldVal;
-            if (shieldVal > 0) {
-                System.out.println("Your armor protected you for " + shieldVal + " damage, " + "You took " + damageTaken + " damage!");
-            }
-            health -= damageTaken;
-            if (health < 1) {
-                playerDeath();
+        if (damage > 0) {
+            int evasionRoll = RollUtils.RollChance();
+            if ((evasion + equippedArmor.evasionBonus) > evasionRoll) {
+                System.out.print("You dodged the attack and took 0 damage!\n");
+            } else {
+                int shieldVal = equippedArmor.shieldVal;
+                int damageTaken;
+                if (damage > shieldVal) {
+                    damageTaken = damage - shieldVal;
+                } else {
+                    damageTaken = 0;
+                }
+                if (shieldVal > 0) {
+                    System.out.println("Your armor protected you for " + shieldVal + " damage, " + "You took " + damageTaken + " damage!");
+                }
+                health -= damageTaken;
+                if (health < 1) {
+                    playerDeath();
+                }
             }
         }
     }

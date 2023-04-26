@@ -1,13 +1,9 @@
 package gameFLow;
 
-import monsters.Bandit;
-import monsters.Brute;
-import monsters.Monster;
-import monsters.Skeleton;
+import monsters.*;
 import player.PassiveEffect;
 import player.PlayerCharacter;
 import player.classes.Mage;
-import utils.RollUtils;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -63,7 +59,7 @@ public class Encounter {
             restOrContinue(scanner);
         } else if (playerChoice.equals("rest")) {
             System.out.println("Recovered some health after a good rest. Time to continue deeper into the dungeons.");
-            playerCharacter.health += (1 + playerCharacter.playerLevel);
+            playerCharacter.health += (2 + playerCharacter.playerLevel);
         } else if (playerChoice.equals("continue")) {
             System.out.println("You feel courageous and continue delving deeper into the dungeons without rest.");
             playerCharacter.gainExp(1);
@@ -73,13 +69,43 @@ public class Encounter {
     public void selectMonster() {
         Monster skeleton = new Skeleton();
         Monster bandit = new Bandit();
-        Monster brute = new Brute();
+        Monster goblin = new Goblin();
+        Monster giantRat = new GiantRat();
+        Monster livingSlime = new LivingSlime();
+        Monster shamblingCorpse = new ShamblingCorpse();
 
-        Monster[] level0MonsterTable = {skeleton, bandit};
-        Monster[] level1MonsterTable = {skeleton, bandit, brute};
-        Monster[] level2MonsterTable = {brute};
-        Monster[] level3MonsterTable = {brute};
-        Monster[] level4MonsterTable = {brute};
+        Monster brute = new Brute();
+        Monster caveTroll = new CaveTroll();
+        Monster orc = new Orc();
+        Monster faceless = new Faceless();
+        Monster cultist = new Cultist();
+        Monster lostSoul = new LostSoul();
+
+        Monster unholyWarrior = new UnholyWarrior();
+        Monster minotaur = new Minotaur();
+        Monster twistedAbomination = new TwistedAbomination();
+        Monster hellHound = new HellHound();
+        Monster rotFiend = new RotFiend();
+        Monster eldritchHorror = new EldritchHorror();
+
+        Monster deathKnight = new DeathKnight();
+        Monster lich = new Lich();
+        Monster pactDemon = new PactDemon();
+        Monster swordMaster = new SwordMaster();
+        Monster theButcher = new TheButcher();
+        Monster ancientVampire = new AncientVampire();
+
+        Monster dragon = new Dragon();
+        Monster undeadGiant = new UndeadGiant();
+        Monster archdemon = new Archdemon();
+        Monster spiderQueen = new SpiderQueen();
+        Monster ancientEvil = new AncientEvil();
+
+        Monster[] level0MonsterTable = {skeleton, bandit, goblin, giantRat, livingSlime, shamblingCorpse};
+        Monster[] level1MonsterTable = {livingSlime, shamblingCorpse, brute, caveTroll, orc, faceless, cultist, lostSoul};
+        Monster[] level2MonsterTable = {faceless, cultist, shamblingCorpse, unholyWarrior, minotaur, twistedAbomination, hellHound, rotFiend, eldritchHorror};
+        Monster[] level3MonsterTable = {cultist, unholyWarrior, eldritchHorror, twistedAbomination, deathKnight, lich, pactDemon, swordMaster, theButcher, ancientVampire};
+        Monster[] level4MonsterTable = {unholyWarrior, eldritchHorror, faceless, deathKnight, lich, dragon, undeadGiant, archdemon, spiderQueen, ancientEvil};
 
         switch(playerCharacter.playerLevel) {
             case 0:
@@ -122,10 +148,10 @@ public class Encounter {
             }
         }
         playerAttack(scanner);
+        isFirstTurn = false;
         if (encounterMonster.health > 0) {
             monsterAttack();
         }
-        if (isFirstTurn) isFirstTurn = false;
     }
 
     public void monsterAttack() {

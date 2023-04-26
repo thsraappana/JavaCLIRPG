@@ -38,7 +38,7 @@ public class CharacterCreation {
 
     public static void classInfo() {
         System.out.println("Warrior:");
-        System.out.println("    Active ability Mighty Blow. Deals extra damage equal to character level and has a chance to stun enemies.");
+        System.out.println("    Active ability: Mighty Blow. Deals extra damage equal to character level and has a chance to stun enemies.");
         System.out.println("    Passive ability: Warriors Will. If dealt lethal damage, has a chance to stay at 1 health instead of dying.");
         System.out.println("    Starting item: Worn Armor. Adds 1 shield value. Shield value reduced the damage enemies deal.");
         System.out.println("Rogue:");
@@ -68,7 +68,7 @@ public class CharacterCreation {
     }
 
     public static String jobSelection(Scanner scanner) {
-        System.out.println("Choose a job for your character; Warrior, Rogue or Mage (if you want more information about jobs, type help instead)");
+        System.out.println("Choose a job for your character; Warrior, Rogue or Mage (if you want more information about jobs, type (help) instead)");
 
         String charJob = scanner.nextLine();
         if (charJob.equals("help")) {
